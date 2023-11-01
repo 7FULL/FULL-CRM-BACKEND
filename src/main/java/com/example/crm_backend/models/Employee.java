@@ -2,8 +2,7 @@ package com.example.crm_backend.models;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
@@ -12,106 +11,60 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  */
 @Document(collection = "employees")
-public class Employee {
+public class Employee extends User{
 
-    @Id
-    private String id;
-
-    private String username;
-    private String password;
-    private String name;
-    private String surname;
-    private String email;
-    private String phone;
-
+    @DBRef
     private Appointment[] appointments;
+
+    @DBRef
+    private Client[] clients;
 
     public Employee() {
     }
 
-    public Employee(String id, String username, String password, String name, String surname, String email, String phone, Appointment[] appointments) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phone = phone;
+    public Employee(String username, String password, String email, String name, String surname, String phone, Role role, Appointment[] appointments, Client[] clients) {
+        super(username, password, email, name, surname, phone, role);
+
+        if (appointments == null) {
+            appointments = new Appointment[0];
+        }
+
+        if (clients == null) {
+            clients = new Client[0];
+        }
+
         this.appointments = appointments;
+        this.clients = clients;
     }
 
-    public Employee(String username, String password, String name, String surname, String email, String phone, Appointment[] appointments) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phone = phone;
-        this.appointments = appointments;
-    }
+    public Employee(String username, String password, String email, String name, String surname, String phone, Role role) {
+        super(username, password, email, name, surname, phone, role);
 
-    //region getters and setters
-    public String getId() {
-        return id;
+        this.appointments = new Appointment[0];
+        this.clients = new Client[0];
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    //endregion
 
     @Override
     public String toString() {
-        return String.format(
-                "Employee[id=%s, username='%s', password='%s', name='%s', surname='%s', email='%s', phone='%s']",
-                id, username, password, name, surname, email, phone);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
+    }
+
+    public void addAppointment(Appointment appointment){
+        Appointment[] newAppointments = new Appointment[appointments.length + 1];
+        for (int i = 0; i < appointments.length; i++) {
+            newAppointments[i] = appointments[i];
+        }
+        newAppointments[appointments.length] = appointment;
+        appointments = newAppointments;
+    }
+
+    public void addClient(Client client){
+        Client[] newClients = new Client[clients.length + 1];
+        for (int i = 0; i < clients.length; i++) {
+            newClients[i] = clients[i];
+        }
+        newClients[clients.length] = client;
+        clients = newClients;
     }
 }
