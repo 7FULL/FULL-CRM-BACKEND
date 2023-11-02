@@ -6,12 +6,11 @@ package com.example.crm_backend.controllers;
  *
  */
 
-import com.example.crm_backend.Data;
+import com.example.crm_backend.models.Client;
 import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.models.Role;
+import com.example.crm_backend.services.ClientService;
 import com.example.crm_backend.services.EmployeeService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/employee")
 public class EmployeeController extends Controller{
     private EmployeeService employeeService;
+
+    @Autowired
+    ClientService clientService;
 
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
@@ -53,12 +55,27 @@ public class EmployeeController extends Controller{
         return ret(200, "pon");
     }
 
-    //This function is used to get the employee data (admin)
     @GetMapping("/getExample")
     public String getExample() {
         Employee e = employeeService.getExampleEmployee();
 
         return ret(200, e);
+    }
+
+    @PostMapping("/addClient")
+    public String addClient(Employee employee, Client client){
+        employeeService.addClient(employee, client);
+
+        return ret(200, "Client added");
+    }
+
+    @PostMapping("/addExampleClient")
+    public String addExampleClient(){
+        Client c = clientService.getExampleClient();
+
+        employeeService.addClient(employeeService.getExampleEmployee(), c);
+
+        return ret(200, "Client added");
     }
 
 }

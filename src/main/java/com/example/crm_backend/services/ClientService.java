@@ -1,6 +1,7 @@
 package com.example.crm_backend.services;
 
 import com.example.crm_backend.models.Appointment;
+import com.example.crm_backend.models.Bill;
 import com.example.crm_backend.models.Client;
 import com.example.crm_backend.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,37 @@ public class ClientService {
         clientRepository.save(client);
     }
 
-    public Client addAppointment(String clientId, Appointment appointment) {
-        Client c = clientRepository.findById(clientId).get();
+    public Client addAppointment(Client client, Appointment appointment) {
+        //Client c = clientRepository.findById(clientId).get();
 
-        c.addAppointment(appointment);
+        client.addAppointment(appointment);
 
-        clientRepository.save(c);
+        clientRepository.save(client);
+
+        return client;
+    }
+
+    public Client addBill(Client client, Bill bill) {
+        //Client c = clientRepository.findById(clientId).get();
+
+        client.addBill(bill);
+
+        clientRepository.save(client);
+
+        return client;
+    }
+
+    public Client getClient(String clientId) {
+        return clientRepository.findById(clientId).get();
+    }
+
+    public void deleteClient(String clientId) {
+        clientRepository.deleteById(clientId);
+    }
+
+    public Client getExampleClient() {
+        Client c = clientRepository.findByUsername("admin");
 
         return c;
     }
-
-
 }

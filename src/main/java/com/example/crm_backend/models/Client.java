@@ -13,6 +13,9 @@ public class Client extends User{
     @DBRef
     private Appointment[] appointments;
 
+    @DBRef
+    private Bill[] bills;
+
     public Client() {
     }
 
@@ -36,17 +39,27 @@ public class Client extends User{
 
     @Override
     public String toString(){
-        String appointmentsString = "";
+        String s = super.toString();
+
+        s += "Appointments: \n";
         for (Appointment appointment : appointments) {
-            appointmentsString += appointment.toString();
+            s += appointment.toString() + "\n";
         }
 
-        return "Client{" +
-                "appointments=" + appointmentsString +
-                '}';
+        s += "Bills: \n";
+        for (Bill bill : bills) {
+            s += bill.toString() + "\n";
+        }
+
+        return s;
     }
 
     public void addAppointment(Appointment appointment) {
+        if (appointments == null){
+            appointments = new Appointment[]{appointment};
+            return;
+        }
+
         Appointment[] newAppointments = new Appointment[appointments.length + 1];
 
         for (int i = 0; i < appointments.length; i++) {
@@ -56,5 +69,22 @@ public class Client extends User{
         newAppointments[appointments.length] = appointment;
 
         appointments = newAppointments;
+    }
+
+    public void addBill(Bill bill) {
+        if (bills == null){
+            bills = new Bill[]{bill};
+            return;
+        }
+
+        Bill[] newBills = new Bill[bills.length + 1];
+
+        for (int i = 0; i < bills.length; i++) {
+            newBills[i] = bills[i];
+        }
+
+        newBills[bills.length] = bill;
+
+        bills = newBills;
     }
 }

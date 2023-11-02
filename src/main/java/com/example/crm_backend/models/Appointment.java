@@ -1,11 +1,10 @@
 package com.example.crm_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.crm_backend.network.DateJsonAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /*
@@ -19,6 +18,7 @@ public class Appointment {
     @Id
     private String id;
 
+    @JsonAdapter(DateJsonAdapter.class)
     private Date date;
 
     private String description;

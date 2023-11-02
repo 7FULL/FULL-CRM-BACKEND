@@ -33,16 +33,14 @@ public class AppointmentService {
         return appointmentRepository.findById(appointmentId).get();
     }
 
-    public void addAppointment(Appointment appointment, String employeeId, String clientId) {
+    public void addAppointment(Appointment appointment, Employee employee, Client client) {
         //We do this because we need the id of the appointment to add it to the employee and client
         //And the id is generated when we save it
         appointment = appointmentRepository.save(appointment);
 
-        System.out.println(appointment.getId());
+        employee = employeeService.addAppointment(employee, appointment);
 
-        Employee employee = employeeService.addAppointment(employeeId, appointment);
-
-        Client client = clientService.addAppointment(clientId, appointment);
+        client = clientService.addAppointment(client, appointment);
 
         appointment.setEmployee(employee.getId());
         appointment.setClient(client.getId());

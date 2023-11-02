@@ -14,27 +14,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Employee extends User{
 
     @DBRef
-    private Appointment[] appointments;
+    private Appointment[] appointments = new Appointment[0];
 
     @DBRef
-    private Client[] clients;
+    private Client[] clients = new Client[0];
+
+    @DBRef
+    private Bill[] bills = new Bill[0];
 
     public Employee() {
-    }
-
-    public Employee(String username, String password, String email, String name, String surname, String phone, Role role, Appointment[] appointments, Client[] clients) {
-        super(username, password, email, name, surname, phone, role);
-
-        if (appointments == null) {
-            appointments = new Appointment[0];
-        }
-
-        if (clients == null) {
-            clients = new Client[0];
-        }
-
-        this.appointments = appointments;
-        this.clients = clients;
     }
 
     public Employee(String username, String password, String email, String name, String surname, String phone, Role role) {
@@ -42,6 +30,7 @@ public class Employee extends User{
 
         this.appointments = new Appointment[0];
         this.clients = new Client[0];
+        this.bills = new Bill[0];
     }
 
     @Override
@@ -66,5 +55,14 @@ public class Employee extends User{
         }
         newClients[clients.length] = client;
         clients = newClients;
+    }
+
+    public void addBill(Bill bill){
+        Bill[] newBills = new Bill[bills.length + 1];
+        for (int i = 0; i < bills.length; i++) {
+            newBills[i] = bills[i];
+        }
+        newBills[bills.length] = bill;
+        bills = newBills;
     }
 }

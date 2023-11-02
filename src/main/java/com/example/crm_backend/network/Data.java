@@ -1,4 +1,4 @@
-package com.example.crm_backend;
+package com.example.crm_backend.network;
 
 /*
  *

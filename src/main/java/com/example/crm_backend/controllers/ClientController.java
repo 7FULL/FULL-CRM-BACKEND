@@ -5,6 +5,7 @@ import com.example.crm_backend.models.Role;
 import com.example.crm_backend.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,5 +37,11 @@ public class ClientController extends Controller{
     @GetMapping("/pin")
     public String pinPon() {
         return ret(200, "pon");
+    }
+
+    @GetMapping("/getExample")
+    public String getExample(){
+        Client c = clientService.getExampleClient();
+        return ret(200, c);
     }
 }
