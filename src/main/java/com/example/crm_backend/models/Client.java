@@ -41,14 +41,18 @@ public class Client extends User{
     public String toString(){
         String s = super.toString();
 
-        s += "Appointments: \n";
-        for (Appointment appointment : appointments) {
-            s += appointment.toString() + "\n";
+        if(appointments != null && appointments.length > 0) {
+            s += "Appointments: \n";
+            for (Appointment appointment : appointments) {
+                s += appointment.toString() + "\n";
+            }
         }
 
-        s += "Bills: \n";
-        for (Bill bill : bills) {
-            s += bill.toString() + "\n";
+        if(bills != null && bills.length > 0) {
+            s += "Bills: \n";
+            for (Bill bill : bills) {
+                s += bill.toString() + "\n";
+            }
         }
 
         return s;

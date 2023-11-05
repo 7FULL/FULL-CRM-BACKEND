@@ -27,7 +27,7 @@ public class ClientController extends Controller{
 
     @GetMapping("/addExample")
     public String insertExample() {
-        Client c = new Client("admin", "admin", "admin", "admin", "admin", "admin", Role.CLIENT, null);
+        Client c = new Client("admin2", "admin2", "admin2", "admin2", "admin2", "admin2", Role.CLIENT, null);
 
         clientService.addClient(c);
 

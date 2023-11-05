@@ -29,10 +29,6 @@ public class BillService {
     }
 
     public void addBill(Bill bill, Employee employee, Client client){
-        System.out.println(employee);
-
-        System.out.println(client);
-
         bill = billRespository.save(bill);
 
         employee = employeeService.addBill(employee, bill);

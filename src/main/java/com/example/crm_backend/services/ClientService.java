@@ -55,7 +55,7 @@ public class ClientService {
     }
 
     public Client getExampleClient() {
-        Client c = clientRepository.findByUsername("admin");
+        Client c = clientRepository.findByUsername("admin2");
 
         return c;
     }
