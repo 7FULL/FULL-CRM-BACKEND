@@ -22,12 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController extends Controller{
     private EmployeeService employeeService;
 
-    @Autowired
+    private MailManager mailManager;
+
     ClientService clientService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, MailManager mailManager, ClientService clientService) {
         this.employeeService = employeeService;
+        this.mailManager = mailManager;
+        this.clientService = clientService;
     }
 
     @PostMapping("/login")
@@ -52,6 +55,8 @@ public class EmployeeController extends Controller{
 
     @GetMapping("/pin")
     public String pinPon() {
+        mailManager.sendEmail("phgfull@gmail.com", "Prueba", "Prueba de correo", "Prueba de correo");
+
         return ret(200, "pon");
     }
 
