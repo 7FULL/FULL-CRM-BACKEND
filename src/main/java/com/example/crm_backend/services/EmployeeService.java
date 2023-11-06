@@ -24,7 +24,6 @@ public class EmployeeService {
     }
 
     public Employee login(String username, String password) {
-        //TODO: Preguntar al profe si la logica de errores se hace en el servicio o en el controlador
         return employeeRepository.findEmployeeByUsernameAndPassword(username, password);
     }
 
