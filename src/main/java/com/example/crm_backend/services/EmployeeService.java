@@ -1,5 +1,6 @@
 package com.example.crm_backend.services;
 
+import com.example.crm_backend.controllers.MailManager;
 import com.example.crm_backend.models.Appointment;
 import com.example.crm_backend.models.Bill;
 import com.example.crm_backend.models.Client;
@@ -18,13 +19,31 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
+    private MailManager mailManager;
+
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, MailManager mailManager) {
         this.employeeRepository = employeeRepository;
+        this.mailManager = mailManager;
     }
 
     public Employee login(String username, String password) {
-        return employeeRepository.findEmployeeByUsernameAndPassword(username, password);
+        //En caso de que no exista por usuario buscamos por email
+        Employee e = employeeRepository.findByUsername(username);
+
+        if (e == null) {
+            e = employeeRepository.findByEmail(username);
+        }
+
+        if (e == null) {
+            return null;
+        }
+
+        if (e.getPassword().equals(password)) {
+            return e;
+        }
+
+        return null;
     }
 
     public Employee addAppointment(Employee employee, Appointment appointment) {
@@ -71,9 +90,42 @@ public class EmployeeService {
         return employee;
     }
 
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
     public void addClient(Employee employee, Client client){
         employee.addClient(client);
 
         employeeRepository.save(employee);
+    }
+
+    public void generateToken(Employee e){
+        String token =  "";
+
+        //Numeros y letras aleatorias
+        for (int i = 0; i < 7; i++) {
+            token += (char) (Math.random() * 26 + 'a');
+        }
+
+        e.setToken(token);
+
+        employeeRepository.save(e);
+
+        mailManager.sendEmail(e.getEmail(), e.getUsername(), "Recuperación de contraseña", tokenHtml(token));
+    }
+
+    public String tokenHtml(String token){
+        return "<h1>Recuperación de contraseña</h1><p>Para recuperar su contraseña, introduzca el siguiente token en la aplicación: <b>" + token + "</b></p>";
+    }
+
+    public void changePassword(Employee e, String password){
+        e.setPassword(password);
+
+        employeeRepository.save(e);
+    }
+
+    public Employee getEmployeeByToken(String token){
+        return employeeRepository.findByToken(token);
     }
 }

@@ -19,4 +19,7 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
     @Query("{ 'username' : ?0, 'password' : ?1 }")
     Employee findEmployeeByUsernameAndPassword(String username, String password);
+
+    @Query("{ 'token' : ?0 }")
+    Employee findByToken(String token);
 }

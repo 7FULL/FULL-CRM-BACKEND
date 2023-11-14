@@ -18,6 +18,7 @@ public abstract class User {
     private String surname;
     private String email;
     private String phone;
+    private String token;
 
     private Role role;
 
@@ -32,6 +33,10 @@ public abstract class User {
         this.email = email;
         this.phone = phone;
         this.role = role;
+    }
+
+    public void setToken(String token){
+        this.token = token;
     }
 
     //region Getters and setters

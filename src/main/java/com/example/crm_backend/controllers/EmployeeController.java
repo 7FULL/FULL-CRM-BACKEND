@@ -22,14 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController extends Controller{
     private EmployeeService employeeService;
 
-    private MailManager mailManager;
-
     ClientService clientService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService, MailManager mailManager, ClientService clientService) {
+    public EmployeeController(EmployeeService employeeService, ClientService clientService) {
         this.employeeService = employeeService;
-        this.mailManager = mailManager;
         this.clientService = clientService;
     }
 
@@ -37,7 +34,8 @@ public class EmployeeController extends Controller{
     public String login(String username, String password) {
         Employee e = employeeService.login(username, password);
 
-        if (e == null) {
+        if (e == null){
+            System.out.println(username + " " + password);
             return ret(401, new Employee());
         }
 
@@ -55,8 +53,6 @@ public class EmployeeController extends Controller{
 
     @GetMapping("/pin")
     public String pinPon() {
-        mailManager.sendEmail("phgfull@gmail.com", "Prueba", "Prueba de correo", "Prueba de correo");
-
         return ret(200, "pon");
     }
 
@@ -83,7 +79,45 @@ public class EmployeeController extends Controller{
         return ret(200, "Client added");
     }
 
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(String email){
+        Employee e = employeeService.getEmployeeByEmail(email);
+
+        if(e == null){
+            return ret(404, "Employee not found");
+        }
+
+        employeeService.generateToken(e);
+
+        return ret(200, "Email sent");
+    }
+
+    @PostMapping("/newPassword")
+    public String newPassword(String token, String password){
+        Employee e = employeeService.getEmployeeByToken(token);
+
+        if(e == null){
+            return ret(404, "Employee not found");
+        }
+
+        employeeService.changePassword(e, password);
+
+        return ret(200, "Password changed");
+    }
+
+    @PostMapping("/checkToken")
+    public String checkToken(String token){
+        Employee e = employeeService.getEmployeeByToken(token);
+
+        if(e == null){
+            return ret(404, "Employee not found");
+        }
+
+        return ret(200, "Token correct");
+    }
 }
+
+//TODO: Hashear contraseñas
 
 //region HTTP codes
 // 200 OK
