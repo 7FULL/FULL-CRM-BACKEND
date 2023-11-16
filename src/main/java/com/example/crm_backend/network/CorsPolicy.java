@@ -14,6 +14,6 @@ public class CorsPolicy implements WebMvcConfigurer {
     //Hacemos esto para que no nos de problemas con el CORS
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*");
+        registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
     }
 }
