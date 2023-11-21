@@ -6,6 +6,7 @@ import com.example.crm_backend.models.Bill;
 import com.example.crm_backend.models.Client;
 import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.repository.EmployeeRepository;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,7 @@ public class EmployeeService {
             return null;
         }
 
-        if (e.getPassword().equals(password)) {
+        if (e.getPassword().equals(DigestUtils.md5Hex(password))) {
             return e;
         }
 

@@ -29,11 +29,16 @@ public class BillController extends Controller{
 
     @PostMapping("/addBill")
     public String addBill(@RequestBody BillRequest request) {
-        Bill bill = request.getBill();
-        Employee employee = request.getEmployee();
-        Client client = request.getClient();
+        try {
+            Bill bill = request.getBill();
+            Employee employee = request.getEmployee();
+            Client client = request.getClient();
 
-        service.addBill(bill, employee, client);
+            service.addBill(bill, employee, client);
+        } catch (Exception e) {
+            return ret(500, "Error inserting bill");
+        }
+
         return ret(200, "Bill inserted");
     }
 }

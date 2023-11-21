@@ -1,6 +1,6 @@
 package com.example.crm_backend.models;
 
-import com.example.crm_backend.network.DateJsonAdapter;
+import com.example.crm_backend.network.config.DateJsonAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -34,11 +34,4 @@ public abstract class Controller {
 
         return gson.toJson(data);
     }
-
-    public String ret(Data data){
-
-        System.out.println("code: " + data.getCode() + " data: " + data);
-
-        return gson.toJson(data);
-    }
 }

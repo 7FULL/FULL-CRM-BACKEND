@@ -4,8 +4,9 @@ import com.example.crm_backend.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication()
 public class CrmBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(CrmBackendApplication.class, args);

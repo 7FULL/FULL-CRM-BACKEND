@@ -1,4 +1,4 @@
-package com.example.crm_backend.network;
+package com.example.crm_backend.network.config;
 
 import com.google.gson.*;
 

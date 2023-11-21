@@ -11,6 +11,7 @@ import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.models.Role;
 import com.example.crm_backend.services.ClientService;
 import com.example.crm_backend.services.EmployeeService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,21 +33,32 @@ public class EmployeeController extends Controller{
 
     @PostMapping("/login")
     public String login(String username, String password) {
-        Employee e = employeeService.login(username, password);
+        Employee em = null;
+        try {
+            em = employeeService.login(username, password);
 
-        if (e == null){
-            System.out.println(username + " " + password);
-            return ret(401, new Employee());
+            if (em == null){
+                System.out.println(username + " " + password);
+                return ret(401, new Employee());
+            }
+        }
+        catch (Exception e){
+            return ret(500, "Error logging in");
         }
 
-        return ret(200, e);
+        return ret(200, em);
     }
 
     @GetMapping("/addExample")
     public String addExample() {
-        Employee e = new Employee("admin", "admin", "admin", "admin", "admin", "admin", Role.EMPLOYEE);
+        try{
+            Employee e = new Employee("admin", "admin", "admin", "admin", "admin", "admin", Role.EMPLOYEE);
 
-        employeeService.addEmployee(e);
+            employeeService.addEmployee(e);
+        }
+        catch (Exception e){
+            return ret(500, "Error inserting employee");
+        }
 
         return ret(200, "Employee inserted");
     }
@@ -58,66 +70,97 @@ public class EmployeeController extends Controller{
 
     @GetMapping("/getExample")
     public String getExample() {
-        Employee e = employeeService.getExampleEmployee();
+        Employee em = null;
+        try {
+            em = employeeService.getExampleEmployee();
+        }
+        catch (Exception e){
+            return ret(500, "Error getting employee");
+        }
 
-        return ret(200, e);
+        return ret(200, em);
     }
 
     @PostMapping("/addClient")
     public String addClient(Employee employee, Client client){
-        employeeService.addClient(employee, client);
+        try {
+            employeeService.addClient(employee, client);
+        }
+        catch (Exception e){
+            return ret(500, "Error adding client");
+        }
 
         return ret(200, "Client added");
     }
 
     @PostMapping("/addExampleClient")
     public String addExampleClient(){
-        Client c = clientService.getExampleClient();
+        try {
+            Client c = clientService.getExampleClient();
 
-        employeeService.addClient(employeeService.getExampleEmployee(), c);
+            employeeService.addClient(employeeService.getExampleEmployee(), c);
+        }
+        catch (Exception e){
+            return ret(500, "Error adding client");
+        }
 
         return ret(200, "Client added");
     }
 
     @PostMapping("/forgotPassword")
     public String forgotPassword(String email){
-        Employee e = employeeService.getEmployeeByEmail(email);
+        try {
+            Employee e = employeeService.getEmployeeByEmail(email);
 
-        if(e == null){
-            return ret(404, "Employee not found");
+            if(e == null){
+                return ret(404, "Employee not found");
+            }
+
+            employeeService.generateToken(e);
         }
-
-        employeeService.generateToken(e);
+        catch (Exception e){
+            return ret(500, "Error sending email");
+        }
 
         return ret(200, "Email sent");
     }
 
     @PostMapping("/newPassword")
     public String newPassword(String token, String password){
-        Employee e = employeeService.getEmployeeByToken(token);
+        try{
+            Employee e = employeeService.getEmployeeByToken(token);
 
-        if(e == null){
-            return ret(404, "Employee not found");
+            if(e == null){
+                return ret(404, "Employee not found");
+            }
+
+            password = DigestUtils.md5Hex(password);
+
+            employeeService.changePassword(e, password);
         }
-
-        employeeService.changePassword(e, password);
+        catch (Exception e){
+            return ret(500, "Error changing password");
+        }
 
         return ret(200, "Password changed");
     }
 
     @PostMapping("/checkToken")
     public String checkToken(String token){
-        Employee e = employeeService.getEmployeeByToken(token);
+        try {
+            Employee e = employeeService.getEmployeeByToken(token);
 
-        if(e == null){
-            return ret(404, "Employee not found");
+            if(e == null){
+                return ret(404, "Employee not found");
+            }
+        }
+        catch (Exception e){
+            return ret(500, "Error checking token");
         }
 
         return ret(200, "Token correct");
     }
 }
-
-//TODO: Hashear contraseñas
 
 //region HTTP codes
 // 200 OK

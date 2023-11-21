@@ -38,16 +38,26 @@ public class AppointmentController extends Controller{
 
     @PostMapping("/addAppointment")
     public String addAppointment(Employee employee, Client client, Appointment appointment) {
-        appointmentService.addAppointment(appointment, employee, client);
+        try{
+            appointmentService.addAppointment(appointment, employee, client);
+        }
+        catch (Exception e){
+            return ret(500, "Error inserting appointment");
+        }
 
         return ret(200, "Appointment inserted");
     }
 
     @GetMapping("/addExample")
     public String addExample() {
-        Appointment a = new Appointment(new Date(), "admin", null, null);
+        try{
+            Appointment a = new Appointment(new Date(), "admin", null, null);
 
-        appointmentService.addAppointment(a);
+            appointmentService.addAppointment(a);
+        }
+        catch (Exception e){
+            return ret(500, "Error inserting appointment");
+        }
 
         return ret(200, "Appointment inserted");
     }

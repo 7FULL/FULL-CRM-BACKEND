@@ -27,9 +27,14 @@ public class ClientController extends Controller{
 
     @GetMapping("/addExample")
     public String insertExample() {
-        Client c = new Client("admin2", "admin2", "admin2", "admin2", "admin2", "admin2", Role.CLIENT, null);
+        try {
+            Client c = new Client("admin2", "admin2", "admin2", "admin2", "admin2", "admin2", Role.CLIENT, null);
 
-        clientService.addClient(c);
+            clientService.addClient(c);
+        }
+        catch (Exception e){
+            return ret(500, "Error inserting client");
+        }
 
         return ret(200, "Client inserted");
     }
@@ -41,7 +46,14 @@ public class ClientController extends Controller{
 
     @GetMapping("/getExample")
     public String getExample(){
-        Client c = clientService.getExampleClient();
+        Client c = null;
+        try{
+            c = clientService.getExampleClient();
+        }
+        catch (Exception e){
+            return ret(500, "Error getting client");
+        }
+
         return ret(200, c);
     }
 }
