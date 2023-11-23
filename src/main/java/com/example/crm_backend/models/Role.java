@@ -6,5 +6,5 @@ package com.example.crm_backend.models;
  *
  */
 public enum Role {
-    ADMIN, EMPLOYEE, CLIENT, DIRECTOR
+    ADMIN, EMPLOYEE, CLIENT, MANAGER
 }

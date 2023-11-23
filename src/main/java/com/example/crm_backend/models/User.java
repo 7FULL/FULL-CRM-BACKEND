@@ -35,6 +35,17 @@ public abstract class User {
         this.role = role;
     }
 
+    public User(String id, String username, String password, String name, String surname, String email, String phone, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+    }
+
     public void setToken(String token){
         this.token = token;
     }

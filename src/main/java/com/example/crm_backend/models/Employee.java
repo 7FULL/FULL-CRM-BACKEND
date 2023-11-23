@@ -65,4 +65,29 @@ public class Employee extends User{
         newBills[bills.length] = bill;
         bills = newBills;
     }
+
+    //Set all bills
+    public void setBills(Bill[] bills) {
+        this.bills = bills;
+    }
+
+    public void setClients(Client[] clients) {
+        this.clients = clients;
+    }
+
+    public void setAppointments(Appointment[] appointments) {
+        this.appointments = appointments;
+    }
+
+    public Bill[] getBills() {
+        return bills;
+    }
+
+    public Client[] getClients() {
+        return clients;
+    }
+
+    public Appointment[] getAppointments() {
+        return appointments;
+    }
 }

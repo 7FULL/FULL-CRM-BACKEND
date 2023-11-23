@@ -22,4 +22,7 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
     @Query("{ 'token' : ?0 }")
     Employee findByToken(String token);
+
+    @Query("{  }")
+    Employee[] findAllEmployees();
 }

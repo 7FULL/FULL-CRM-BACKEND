@@ -7,6 +7,8 @@ import com.example.crm_backend.repository.BillRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+
 /*
  *
  *@author Pablo Hermida Gómez DAM G1
@@ -26,6 +28,8 @@ public class BillService {
         this.employeeService = employeeService;
         this.clientService = clientService;
         this.billRespository = billRespository;
+
+        employeeService.setBillService(this);
     }
 
     public void addBill(Bill bill, Employee employee, Client client){
@@ -39,5 +43,9 @@ public class BillService {
         bill.setClientID(client.getId());
 
         billRespository.save(bill);
+    }
+
+    public Bill[] getBills() {
+        return billRespository.findAllBills();
     }
 }

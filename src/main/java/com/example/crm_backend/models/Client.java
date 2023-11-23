@@ -29,6 +29,16 @@ public class Client extends User{
         this.appointments = appointments;
     }
 
+    public Client(Employee employee) {
+        super(employee.getId(), employee.getUsername(), employee.getPassword(), employee.getName(), employee.getSurname(), employee.getEmail(), employee.getPhone(), employee.getRole());
+
+        if (employee.getAppointments() == null) {
+            employee.setAppointments(new Appointment[0]);
+        }
+
+        this.appointments = employee.getAppointments();
+    }
+
     public Appointment[] getAppointments() {
         return appointments;
     }

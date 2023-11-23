@@ -6,10 +6,7 @@ import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.network.BillRequest;
 import com.example.crm_backend.services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
  *
@@ -40,5 +37,15 @@ public class BillController extends Controller{
         }
 
         return ret(200, "Bill inserted");
+    }
+
+    //Get all bills
+    @GetMapping("/getBills")
+    public String getBills() {
+        try {
+            return ret(200, service.getBills());
+        } catch (Exception e) {
+            return ret(500, "Error getting bills");
+        }
     }
 }
