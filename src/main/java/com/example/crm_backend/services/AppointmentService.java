@@ -1,5 +1,6 @@
 package com.example.crm_backend.services;
 
+import com.example.crm_backend.controllers.MailManager;
 import com.example.crm_backend.models.Appointment;
 import com.example.crm_backend.models.Client;
 import com.example.crm_backend.models.Employee;
@@ -22,15 +23,16 @@ public class AppointmentService {
 
     private ClientService clientService;
 
+    private MailManager mailManager;
+
     @Autowired
-    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeService employeeService, ClientService clientService) {
+    public AppointmentService(AppointmentRepository appointmentRepository,
+                              EmployeeService employeeService, ClientService clientService,
+                              MailManager mailManager) {
         this.appointmentRepository = appointmentRepository;
         this.employeeService = employeeService;
         this.clientService = clientService;
-    }
-
-    public Appointment getAppointment(String appointmentId) {
-        return appointmentRepository.findById(appointmentId).get();
+        this.mailManager = mailManager;
     }
 
     public void addAppointment(Appointment appointment, Employee employee, Client client) {
@@ -41,6 +43,10 @@ public class AppointmentService {
         employee = employeeService.addAppointment(employee, appointment);
 
         client = clientService.addAppointment(client, appointment);
+
+        //Le mandamos un correo al cliente y al empleado para que sepan que tienen una cita
+        mailManager.sendEmail(client.getEmail(), client.getName(), "Cita creada", "Se ha creado una cita con el empleado " + employee.getName() + " para el día " + appointment.getDate());
+        mailManager.sendEmail(employee.getEmail(), employee.getName(),"Cita creada", "Se ha creado una cita con el cliente " + client.getName() + " para el día " + appointment.getDate());
 
         appointment.setEmployee(employee.getId());
         appointment.setClient(client.getId());

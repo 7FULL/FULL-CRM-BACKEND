@@ -13,10 +13,7 @@ import com.example.crm_backend.services.ClientService;
 import com.example.crm_backend.services.EmployeeService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -38,7 +35,6 @@ public class EmployeeController extends Controller{
             em = employeeService.login(username, password);
 
             if (em == null){
-                System.out.println(username + " " + password);
                 return ret(401, new Employee());
             }
         }
@@ -49,7 +45,7 @@ public class EmployeeController extends Controller{
         return ret(200, em);
     }
 
-    @GetMapping("/addExample")
+    @PostMapping("/addExample")
     public String addExample() {
         try{
             Employee e = new Employee("admin", "admin", "admin", "admin", "admin", "admin", Role.EMPLOYEE);
@@ -125,7 +121,7 @@ public class EmployeeController extends Controller{
         return ret(200, "Email sent");
     }
 
-    @PostMapping("/newPassword")
+    @PutMapping("/newPassword")
     public String newPassword(String token, String password){
         try{
             Employee e = employeeService.getEmployeeByToken(token);

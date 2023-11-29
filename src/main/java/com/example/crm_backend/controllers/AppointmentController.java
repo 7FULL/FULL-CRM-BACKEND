@@ -48,20 +48,6 @@ public class AppointmentController extends Controller{
         return ret(200, "Appointment inserted");
     }
 
-    @GetMapping("/addExample")
-    public String addExample() {
-        try{
-            Appointment a = new Appointment(new Date(), "admin", null, null);
-
-            appointmentService.addAppointment(a);
-        }
-        catch (Exception e){
-            return ret(500, "Error inserting appointment");
-        }
-
-        return ret(200, "Appointment inserted");
-    }
-
     @GetMapping("/pin")
     public String pinPon() {
         return ret(200, "pon");

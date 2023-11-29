@@ -25,7 +25,7 @@ public class ClientController extends Controller{
         this.clientService = clientService;
     }
 
-    @GetMapping("/addExample")
+    @PostMapping("/addExample")
     public String insertExample() {
         try {
             Client c = new Client("admin2", "admin2", "admin2", "admin2", "admin2", "admin2", Role.CLIENT, null);

@@ -3,6 +3,7 @@ package com.example.crm_backend.controllers;
 import com.example.crm_backend.network.Data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /*
  *
@@ -20,7 +21,15 @@ public abstract class Controller {
         System.out.println();
         System.out.println("*********************************");
 
-        return gson.toJson(new Data(code, data));
+        String ret = gson.toJson(new Data(code, data));
+
+        if (code == 200) {
+            Logger.log(data);
+        } else {
+            Logger.logError(data);
+        }
+
+        return ret;
     }
 
     public String ret(int code, Object object){
@@ -32,6 +41,14 @@ public abstract class Controller {
         System.out.println();
         System.out.println("*********************************");
 
-        return gson.toJson(data);
+        String ret = gson.toJson(data);
+
+        if (code == 200) {
+            Logger.log(ret);
+        } else {
+            Logger.logError(ret);
+        }
+
+        return ret;
     }
 }

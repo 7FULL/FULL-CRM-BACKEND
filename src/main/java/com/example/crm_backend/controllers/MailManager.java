@@ -15,8 +15,6 @@ import java.beans.JavaBean;
  */
 @Component
 public class MailManager {
-
-    //TODO: Crear nueva cuenta de mailjet y cambiar las claves
     private final String mailJetKey = "6c15b25b5e8166204d2c388114d68101";
     private final String secretMailJetKey = "3baef8ff9b8cd415598284268992c1b3";
 

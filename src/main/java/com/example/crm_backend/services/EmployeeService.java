@@ -44,7 +44,7 @@ public class EmployeeService {
         }
 
         //En caso de que sea el administrador añadimos todos los empleados que existen como clientes
-        //y todas las facturas que existen como facturas
+        //y todas las facturas que existen como facturaschrome
 
         if (e.getRole() == Role.ADMIN || e.getRole() == Role.MANAGER) {
             e.setClients(convertToClients(employeeRepository.findAllEmployees()));
@@ -52,8 +52,20 @@ public class EmployeeService {
         }
 
         if (e.getPassword().equals(DigestUtils.md5Hex(password))) {
+            //Avisar por correo de que ha habido un inicio de sesion
+            mailManager.sendEmail(e.getEmail(), e.getUsername(),
+                    "Inicio de sesión",
+                    "Se ha iniciado sesión en su cuenta, " +
+                            "si no ha sido usted, cambie su contraseña inmediatamente");
+
             return e;
         }
+
+        //Avisar por correo de que ha habido un intento de inicio de sesion fallido
+        mailManager.sendEmail(e.getEmail(), e.getUsername(),
+                "Intento de inicio de sesión fallido",
+                "Se ha intentado iniciar sesión en su cuenta desde una ubicación desconocida, " +
+                        "si no ha sido usted, cambie su contraseña inmediatamente");
 
         return null;
     }
@@ -143,6 +155,11 @@ public class EmployeeService {
 
     public void changePassword(Employee e, String password){
         e.setPassword(password);
+
+        //Enciamos un correo para avisar de que se ha cambiado la contraseña
+        mailManager.sendEmail(e.getEmail(), e.getUsername(), "Contraseña cambiada",
+                "Se ha cambiado la contraseña de su cuenta, " +
+                        "si no ha sido usted, cambie su contraseña inmediatamente");
 
         employeeRepository.save(e);
     }

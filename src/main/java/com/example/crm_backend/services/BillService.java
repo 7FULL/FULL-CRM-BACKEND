@@ -1,5 +1,6 @@
 package com.example.crm_backend.services;
 
+import com.example.crm_backend.controllers.MailManager;
 import com.example.crm_backend.models.Bill;
 import com.example.crm_backend.models.Client;
 import com.example.crm_backend.models.Employee;
@@ -23,11 +24,15 @@ public class BillService {
 
     private BillRespository billRespository;
 
+    private MailManager mailManager;
+
     @Autowired
-    public BillService(EmployeeService employeeService, ClientService clientService, BillRespository billRespository) {
+    public BillService(EmployeeService employeeService, ClientService clientService,
+                       BillRespository billRespository, MailManager mailManager) {
         this.employeeService = employeeService;
         this.clientService = clientService;
         this.billRespository = billRespository;
+        this.mailManager = mailManager;
 
         employeeService.setBillService(this);
     }
@@ -41,6 +46,17 @@ public class BillService {
 
         bill.setEmployeeID(employee.getId());
         bill.setClientID(client.getId());
+
+        //Le mandamos un correo al cliente y al empleado para que sepan que tienen una nueva factura
+        mailManager.sendEmail(client.getEmail(), client.getName(), "Nueva factura",
+                "Se ha creado una factura con el empleado " + employee.getName() +
+                        " con el concepto de pago de " + bill.getName() +
+                        " por un valor de " + bill.getPrice() + "€");
+
+        mailManager.sendEmail(employee.getEmail(), employee.getName(),"Nueva factura",
+                "Se ha creado una factura con el cliente " + client.getName() +
+                        " con el concepto de pago de " + bill.getName() +
+                        " por un valor de " + bill.getPrice() + "€");
 
         billRespository.save(bill);
     }
