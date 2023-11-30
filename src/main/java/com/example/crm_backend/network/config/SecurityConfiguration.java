@@ -13,15 +13,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
  */
+
+/**
+ * Spring Security configuration
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+    //Estas son las contraseñas hasheadas con el BCryptEncoder son (user y admin)
     final String ADMIN_PASSWORD = "$2a$10$beMaPHqnbN5xKb6H.OfC/OLvlTAWVB5mwTFsldIy7I1RbrnJllGl6";
 
     final String USER_PASSWORD = "$2a$10$p8IFPSHfqARXuCX2IjqItezvcaq42Ak6Hj6I/ivTlWdMdj1GGjT96";
@@ -34,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
+                .cors().disable()
                 .httpBasic();
     }
 

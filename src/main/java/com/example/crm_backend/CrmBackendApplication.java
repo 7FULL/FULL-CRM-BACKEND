@@ -7,6 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * @author Pablo Hermida Gómez
+ */
+
+/**
+ * Main class
+ */
 @SpringBootApplication()
 public class CrmBackendApplication {
     public static void main(String[] args) {

@@ -4,10 +4,14 @@ import com.example.crm_backend.models.Client;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Client repository
  */
 public interface ClientRepository extends MongoRepository<Client, String> {
 

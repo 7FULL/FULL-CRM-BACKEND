@@ -20,10 +20,14 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Appointment controller
  */
 @RestController
 @RequestMapping("/api/appointment")
@@ -36,6 +40,13 @@ public class AppointmentController extends Controller{
         this.appointmentService = appointmentService;
     }
 
+    /**
+     * Get all the appointments
+     * @param employee      The employee to add the appointment to
+     * @param client        The client to add the appointment to
+     * @param appointment   The appointment to add and save to the database
+     * @return              JSON with code 200 if everything is ok, 500 if not and a message
+     */
     @PostMapping("/addAppointment")
     public String addAppointment(Employee employee, Client client, Appointment appointment) {
         try{
@@ -48,6 +59,10 @@ public class AppointmentController extends Controller{
         return ret(200, "Appointment inserted");
     }
 
+    /**
+     * Pin Pon
+     * @return Pon
+     */
     @GetMapping("/pin")
     public String pinPon() {
         return ret(200, "pon");

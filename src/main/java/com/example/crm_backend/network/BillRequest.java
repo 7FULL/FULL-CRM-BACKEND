@@ -9,6 +9,11 @@ import com.example.crm_backend.models.Employee;
  *@author Pablo Hermida Gómez DAM G1
  *
  */
+
+/**
+ * Bill request class
+ * This class is used to parse a request to add a bill to the database
+ */
 public class BillRequest{
     private Employee employee;
     private Client client;

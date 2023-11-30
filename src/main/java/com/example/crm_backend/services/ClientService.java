@@ -7,10 +7,14 @@ import com.example.crm_backend.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Client service
  */
 @Service
 public class ClientService {
@@ -22,10 +26,20 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
+    /**
+     * Add a new client to the database
+     * @param client    The client to add
+     */
     public void addClient(Client client) {
         clientRepository.save(client);
     }
 
+    /**
+     * Add an appointment to a client
+     * @param client        The client to add the appointment
+     * @param appointment   The appointment to add
+     * @return              The client with the new appointment
+     */
     public Client addAppointment(Client client, Appointment appointment) {
         //Client c = clientRepository.findById(clientId).get();
 
@@ -36,6 +50,12 @@ public class ClientService {
         return client;
     }
 
+    /**
+     * Add a bill to a client
+     * @param client    The client to add the bill
+     * @param bill      The bill to add
+     * @return          The client with the new bill
+     */
     public Client addBill(Client client, Bill bill) {
         //Client c = clientRepository.findById(clientId).get();
 
@@ -46,17 +66,28 @@ public class ClientService {
         return client;
     }
 
+    /**
+     * Get a client by its id
+     * @param clientId  The id of the client
+     * @return          The client, if exists in the database or null if not
+     */
     public Client getClient(String clientId) {
         return clientRepository.findById(clientId).get();
     }
 
+    /**
+     * Delete a client by its id
+     * @param clientId  The id of the client
+     */
     public void deleteClient(String clientId) {
         clientRepository.deleteById(clientId);
     }
 
+    /**
+     * Get the example client from the database
+     * @return  The example client from the database or null if not exists
+     */
     public Client getExampleClient() {
-        Client c = clientRepository.findByUsername("admin2");
-
-        return c;
+        return clientRepository.findByUsername("admin2");
     }
 }

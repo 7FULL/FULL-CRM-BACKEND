@@ -5,10 +5,14 @@ import com.google.gson.GsonBuilder;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Employee class
  */
 @Document(collection = "employees")
 public class Employee extends User{

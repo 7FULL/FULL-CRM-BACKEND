@@ -7,10 +7,14 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Employee service
  */
 @Service
 public class EmployeeService {
@@ -31,6 +35,19 @@ public class EmployeeService {
         this.billService = billService;
     }
 
+    /**
+     * Check if someone can login with the given username and password.
+     * If the username is not found, we search by email.
+     * <p>
+     * If the user is an admin, we add all the employees.
+     * If the user is a manager or an admin,
+     * we add all the employees as clients and all the bills as their bills for them to being able to see them.
+     * <p>
+     * If the password is correct, we send an email to the user to notify him that someone has logged in their account.
+     * @param username  The username or email of the user.
+     * @param password  The password of the user.
+     * @return          The employee if the login was successful, null otherwise.
+     */
     public Employee login(String username, String password) {
         //En caso de que no exista por usuario buscamos por email
         Employee e = employeeRepository.findByUsername(username);
@@ -43,15 +60,15 @@ public class EmployeeService {
             return null;
         }
 
-        //En caso de que sea el administrador añadimos todos los empleados que existen como clientes
-        //y todas las facturas que existen como facturaschrome
-
-        if (e.getRole() == Role.ADMIN || e.getRole() == Role.MANAGER) {
-            e.setClients(convertToClients(employeeRepository.findAllEmployees()));
-            e.setBills(billService.getBills());
-        }
-
         if (e.getPassword().equals(DigestUtils.md5Hex(password))) {
+            //En caso de que sea el administrador añadimos todos los empleados que existen como clientes
+            //y todas las facturas que existen como facturaschrome
+
+            if (e.getRole() == Role.ADMIN || e.getRole() == Role.MANAGER) {
+                e.setClients(convertToClients(employeeRepository.findAllEmployees()));
+                e.setBills(billService.getBills());
+            }
+
             //Avisar por correo de que ha habido un inicio de sesion
             mailManager.sendEmail(e.getEmail(), e.getUsername(),
                     "Inicio de sesión",
@@ -70,6 +87,11 @@ public class EmployeeService {
         return null;
     }
 
+    /**
+     * Convert an array of employees to an array of clients. This is used to add all the employees as clients to the admin.
+     * @param employees The array of employees.
+     * @return          The array of clients.
+     */
     private Client[] convertToClients(Employee[] employees) {
         Client[] clients = new Client[employees.length];
 
@@ -80,6 +102,12 @@ public class EmployeeService {
         return clients;
     }
 
+    /**
+     * Add an appointment to an employee.
+     * @param employee      The employee.
+     * @param appointment   The appointment.
+     * @return              The employee with the appointment added.
+     */
     public Employee addAppointment(Employee employee, Appointment appointment) {
         //Employee e = employeeRepository.findById(employeeId).get();
         employee.addAppointment(appointment);
@@ -89,32 +117,65 @@ public class EmployeeService {
         return employee;
     }
 
+    /**
+     * Add an employee to the database.
+     * @param e The employee.
+     */
     public void addEmployee(Employee e) {
         employeeRepository.save(e);
     }
 
+    /**
+     * Get the employee with the given id.
+     * @param employeeId    The id of the employee.
+     * @return              The employee if it exists, null otherwise.
+     */
     public Employee getEmployee(String employeeId) {
         return employeeRepository.findById(employeeId).get();
     }
 
+    /**
+     * Delete the employee with the given id.
+     * @param employeeId    The id of the employee.
+     */
     public void deleteEmployee(String employeeId) {
         employeeRepository.deleteById(employeeId);
     }
 
+    /**
+     * Get the example employee from the database.
+     * @return  The example employee if it exists, null otherwise.
+     */
     public Employee getExampleEmployee() {
         Employee e = employeeRepository.findByUsername("admin");
 
         return e;
     }
 
+    /**
+     * Get the employee with the given username.
+     * @param username  The username of the employee.
+     * @return          The employee if it exists, null otherwise.
+     */
     public Employee getEmployeeByUsername(String username) {
         return employeeRepository.findByUsername(username);
     }
 
+    /**
+     * Get the employee with the given id.
+     * @param id    The id of the employee.
+     * @return      The employee if it exists, null otherwise.
+     */
     public Employee getEmployeeById(String id) {
         return employeeRepository.findById(id).get();
     }
 
+    /**
+     * Add a bill to an employee.
+     * @param employee  The employee.
+     * @param bill      The bill.
+     * @return          The employee with the bill added.
+     */
     public Employee addBill(Employee employee, Bill bill) {
         //Employee e = employeeRepository.findById(employeeId).get();
         employee.addBill(bill);
@@ -124,16 +185,33 @@ public class EmployeeService {
         return employee;
     }
 
+    /**
+     * Get the employee with the given email.
+     * @param email The email of the employee.
+     * @return      The employee if it exists, null otherwise.
+     */
     public Employee getEmployeeByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
 
-    public void addClient(Employee employee, Client client){
+    /**
+     * Add a client to an employee.
+     * @param employee  The employee.
+     * @param client    The client.
+     * @return          The employee with the client added.
+     */
+    public Employee addClient(Employee employee, Client client){
         employee.addClient(client);
 
         employeeRepository.save(employee);
+
+        return employee;
     }
 
+    /**
+     * Generate a token for an employee and send it to their email.
+     * @param e The employee associated with the token generated and the email to send it to.
+     */
     public void generateToken(Employee e){
         String token =  "";
 
@@ -149,10 +227,20 @@ public class EmployeeService {
         mailManager.sendEmail(e.getEmail(), e.getUsername(), "Recuperación de contraseña", tokenHtml(token));
     }
 
+    /**
+     * Generate the html for the email to send to the employee with the token.
+     * @param token The token to send.
+     * @return      The html for the email.
+     */
     public String tokenHtml(String token){
         return "<h1>Recuperación de contraseña</h1><p>Para recuperar su contraseña, introduzca el siguiente token en la aplicación: <b>" + token + "</b></p>";
     }
 
+    /**
+     * Change the password of an employee.
+     * @param e         The employee.
+     * @param password  The new password.
+     */
     public void changePassword(Employee e, String password){
         e.setPassword(password);
 
@@ -164,6 +252,11 @@ public class EmployeeService {
         employeeRepository.save(e);
     }
 
+    /**
+     * Get the employee with the given token.
+     * @param token The token of the employee.
+     * @return      The employee if it exists, null otherwise.
+     */
     public Employee getEmployeeByToken(String token){
         return employeeRepository.findByToken(token);
     }

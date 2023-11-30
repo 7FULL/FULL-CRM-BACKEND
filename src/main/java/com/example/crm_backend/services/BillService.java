@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Bill service
  */
 @Service
 public class BillService {
@@ -37,6 +41,13 @@ public class BillService {
         employeeService.setBillService(this);
     }
 
+    /**
+     * Add a bill to the database and link it to the employee and client that made it.
+     * Also sends an email to both of them and saves the bill in their respective lists
+     * @param bill      Bill to add
+     * @param employee  Employee that made the bill
+     * @param client    Client to whom the bill is addressed
+     */
     public void addBill(Bill bill, Employee employee, Client client){
         bill = billRespository.save(bill);
 
@@ -61,6 +72,10 @@ public class BillService {
         billRespository.save(bill);
     }
 
+    /**
+     * Get all the bills from the database
+     * @return  Array of bills
+     */
     public Bill[] getBills() {
         return billRespository.findAllBills();
     }

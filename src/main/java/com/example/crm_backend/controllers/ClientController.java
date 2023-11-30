@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Client controller
  */
 @RestController
 @RequestMapping("/api/client")
@@ -25,6 +29,10 @@ public class ClientController extends Controller{
         this.clientService = clientService;
     }
 
+    /**
+     * Add an example client to the database
+     * @return JSON with code 200 if the client was added, or code 500 if there was an error and a message
+     */
     @PostMapping("/addExample")
     public String insertExample() {
         try {
@@ -39,11 +47,19 @@ public class ClientController extends Controller{
         return ret(200, "Client inserted");
     }
 
+    /**
+     * Pin Pon
+     * @return Pon
+     */
     @GetMapping("/pin")
     public String pinPon() {
         return ret(200, "pon");
     }
 
+    /**
+     * Get the example client from the database
+     * @return JSON with code 200 and the client if it was found, or code 500 and a message if there was an error
+     */
     @GetMapping("/getExample")
     public String getExample(){
         Client c = null;

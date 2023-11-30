@@ -9,10 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Appointment service
  */
 @Service
 public class AppointmentService {
@@ -35,6 +39,12 @@ public class AppointmentService {
         this.mailManager = mailManager;
     }
 
+    /**
+     * Adds an appointment to the database and adds it to the employee and client
+     * @param appointment   The appointment to add and save to the database
+     * @param employee      The employee to add the appointment to
+     * @param client        The client to add the appointment to
+     */
     public void addAppointment(Appointment appointment, Employee employee, Client client) {
         //We do this because we need the id of the appointment to add it to the employee and client
         //And the id is generated when we save it
@@ -54,6 +64,10 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
+    /**
+     * Adds an appointment to the database
+     * @param appointment   The appointment to save to the database
+     */
     public void addAppointment(Appointment appointment) {
         appointmentRepository.save(appointment);
     }

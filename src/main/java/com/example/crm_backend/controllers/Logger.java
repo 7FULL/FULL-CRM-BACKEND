@@ -8,15 +8,20 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class is used to log the responses to the client. It contains two methods, one for logging the response and another for logging the error response.
+ */
 public class Logger {
 
+    /**
+     * Logs the response to the log file. The log file is located in the logs folder by date.
+     * @param response  The response to be logged.
+     */
     public static void log(String response) {
-        // Get the current date
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         String currentDay = dateFormat.format(currentDate);
 
-        // Create directory if it doesn't exist
         Path logDirectoryPath = Paths.get("logs/" + currentDay);
         try {
             Files.createDirectories(logDirectoryPath);
@@ -24,7 +29,6 @@ public class Logger {
             e.printStackTrace();
         }
 
-        // Write the message to the file along with the current date
         try (FileWriter fileWriter = new FileWriter("logs/" + currentDay + "/Log.log", true)) {
 
             fileWriter.write("\n\n");
@@ -37,16 +41,17 @@ public class Logger {
         }
     }
 
+    /**
+     * Logs the response to the error log file. The log file is located in the logs folder by date.
+     * @param response  The response to be logged.
+     */
     public static void logError(String response) {
-        // Log the error in the log file
         log(response);
 
-        // Get the current date
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         String currentDay = dateFormat.format(currentDate);
 
-        // Create directory if it doesn't exist
         Path logDirectoryPath = Paths.get("main/logs/" + currentDay);
         try {
             Files.createDirectories(logDirectoryPath);
@@ -54,8 +59,7 @@ public class Logger {
             e.printStackTrace();
         }
 
-        // Write the error message to the error file along with the current date
-        try (FileWriter fileWriter = new FileWriter("main/logs/" + currentDay + "/LogError.log", true)) {
+        try (FileWriter fileWriter = new FileWriter("logs/" + currentDay + "/LogError.log", true)) {
 
             fileWriter.write("\n\n");
             fileWriter.write("Date: " + currentDate + "\n");

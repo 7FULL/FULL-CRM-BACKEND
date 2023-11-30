@@ -3,10 +3,14 @@ package com.example.crm_backend.models;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Client class
  */
 @Document(collection = "clients")
 public class Client extends User{

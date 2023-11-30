@@ -8,6 +8,9 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * This class is used to serialize and deserialize dates in the ISO format.
+ */
 public class DateJsonAdapter implements JsonDeserializer<Date>, JsonSerializer<Date> {
     @Override
     public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

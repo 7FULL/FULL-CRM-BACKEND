@@ -4,10 +4,14 @@ import com.example.crm_backend.models.Employee;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Employee repository
  */
 public interface EmployeeRepository extends MongoRepository<Employee, String> {
 

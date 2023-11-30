@@ -8,10 +8,14 @@ import org.springframework.stereotype.Component;
 
 import java.beans.JavaBean;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * This class is used to send emails using MailJet API
  */
 @Component
 public class MailManager {
@@ -26,6 +30,13 @@ public class MailManager {
 
     MailjetClient client = new MailjetClient(options);
 
+    /**
+     * Method to send an email
+     * @param to        email to send
+     * @param nameTo    name of the person to send
+     * @param subject   subject of the email
+     * @param text      text of the email (can be HTML)
+     */
     public void sendEmail(String to, String nameTo, String subject, String text){
         TransactionalEmail message1 = TransactionalEmail
                 .builder()
