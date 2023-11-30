@@ -90,4 +90,12 @@ public class ClientService {
     public Client getExampleClient() {
         return clientRepository.findByUsername("admin2");
     }
+
+    /**
+     * Get all the clients from the database
+     * @return  An array with all the clients
+     */
+    public Client[] getClients() {
+        return clientRepository.findAllClients();
+    }
 }

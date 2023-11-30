@@ -71,4 +71,12 @@ public class AppointmentService {
     public void addAppointment(Appointment appointment) {
         appointmentRepository.save(appointment);
     }
+
+    /**
+     * Get all the appointments from the database
+     * @return  An array with all the appointments
+     */
+    public Appointment[] getAppointments() {
+        return appointmentRepository.findAllAppointments();
+    }
 }

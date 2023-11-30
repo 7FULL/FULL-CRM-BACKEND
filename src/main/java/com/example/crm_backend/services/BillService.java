@@ -51,23 +51,24 @@ public class BillService {
     public void addBill(Bill bill, Employee employee, Client client){
         bill = billRespository.save(bill);
 
-        employee = employeeService.addBill(employee, bill);
+        if(employee != null && employee.getId() != null){
+            employee = employeeService.addBill(employee, bill);
+            bill.setEmployeeID(employee.getId());
+            mailManager.sendEmail(employee.getEmail(), employee.getName(),"Nueva factura",
+                    "Se ha creado una factura con el cliente " + client.getName() +
+                            " con el concepto de pago de " + bill.getName() +
+                            " por un valor de " + bill.getPrice() + "€");
+        }
 
-        client = clientService.addBill(client, bill);
-
-        bill.setEmployeeID(employee.getId());
-        bill.setClientID(client.getId());
-
-        //Le mandamos un correo al cliente y al empleado para que sepan que tienen una nueva factura
-        mailManager.sendEmail(client.getEmail(), client.getName(), "Nueva factura",
-                "Se ha creado una factura con el empleado " + employee.getName() +
-                        " con el concepto de pago de " + bill.getName() +
-                        " por un valor de " + bill.getPrice() + "€");
-
-        mailManager.sendEmail(employee.getEmail(), employee.getName(),"Nueva factura",
-                "Se ha creado una factura con el cliente " + client.getName() +
-                        " con el concepto de pago de " + bill.getName() +
-                        " por un valor de " + bill.getPrice() + "€");
+        if(client != null && client.getId() != null){
+            client = clientService.addBill(client, bill);
+            bill.setClientID(client.getId());
+            //Le mandamos un correo al cliente y al empleado para que sepan que tienen una nueva factura
+            mailManager.sendEmail(client.getEmail(), client.getName(), "Nueva factura",
+                    "Se ha creado una factura con el empleado " + employee.getName() +
+                            " con el concepto de pago de " + bill.getName() +
+                            " por un valor de " + bill.getPrice() + "€");
+        }
 
         billRespository.save(bill);
     }

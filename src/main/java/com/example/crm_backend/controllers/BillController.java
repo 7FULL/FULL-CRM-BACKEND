@@ -49,19 +49,6 @@ public class BillController extends Controller{
     }
 
     /**
-     * Get all the bills from the database
-     * @return  JSON with code 200 and the bills if they were found, or code 500 and a message if there was an error
-     */
-    @GetMapping("/getBills")
-    public String getBills() {
-        try {
-            return ret(200, service.getBills());
-        } catch (Exception e) {
-            return ret(500, "Error getting bills");
-        }
-    }
-
-    /**
      * Pin Pon
      * @return Pon
      */

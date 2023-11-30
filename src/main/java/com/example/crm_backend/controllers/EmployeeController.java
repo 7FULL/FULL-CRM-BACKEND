@@ -188,6 +188,28 @@ public class EmployeeController extends Controller{
 
         return ret(200, "Token correct");
     }
+
+    /**
+     * Get the employee with the given username
+     * @param username  Username of the employee
+     * @return          JSON with code 200 and the employee if it was found, or code 500 and a message if there was an error
+     */
+    @PostMapping("/getEmployee")
+    public String getEmployee(String username){
+        Employee e = null;
+        try {
+            e = employeeService.getEmployeeByUsername(username);
+
+            if(e == null){
+                return ret(404, "Employee not found");
+            }
+        }
+        catch (Exception ex){
+            return ret(500, "Error getting employee");
+        }
+
+        return ret(200, e);
+    }
 }
 
 //region HTTP codes

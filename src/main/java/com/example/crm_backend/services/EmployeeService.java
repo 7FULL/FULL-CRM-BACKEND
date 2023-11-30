@@ -263,4 +263,12 @@ public class EmployeeService {
     public Employee getEmployeeByToken(String token){
         return employeeRepository.findByToken(token);
     }
+
+    /**
+     * Get all the employees from the database.
+     * @return  The array of employees.
+     */
+    public Employee[] getAllEmployees() {
+        return employeeRepository.findAllEmployees();
+    }
 }

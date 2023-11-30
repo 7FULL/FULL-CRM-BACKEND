@@ -17,4 +17,7 @@ public interface ClientRepository extends MongoRepository<Client, String> {
 
     @Query("{ 'username' : ?0 }")
     Client findByUsername(String username);
+
+    @Query("{ }")
+    Client[] findAllClients();
 }
