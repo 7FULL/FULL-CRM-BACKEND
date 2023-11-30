@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  *@author Pablo Hermida Gómez DAM G1
  *
  */
+
+/**
+ * Abstract controller class.
+ */
 public abstract class Controller {
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();

@@ -31,6 +31,9 @@ public class EmployeeService {
         this.mailManager = mailManager;
     }
 
+    /**
+     * @param billService Set the bill service.
+     */
     public void setBillService(BillService billService) {
         this.billService = billService;
     }

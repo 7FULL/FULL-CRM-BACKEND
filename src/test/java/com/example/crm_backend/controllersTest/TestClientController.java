@@ -1,6 +1,6 @@
 package com.example.crm_backend.controllersTest;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
@@ -24,6 +24,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+/**
+ * Test class for the client controller.
+ */
 @AutoConfigureMockMvc
 @SpringBootTest
 public class TestClientController {

@@ -16,10 +16,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
+ */
+
+/**
+ * Test class for the appointment controller.
  */
 @SpringBootTest
 @AutoConfigureMockMvc

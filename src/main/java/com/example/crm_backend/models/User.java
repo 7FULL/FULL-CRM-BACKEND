@@ -1,13 +1,10 @@
 package com.example.crm_backend.models;
 
-/*
- *
- *@author Pablo Hermida Gómez DAM G1
- *
- */
-
 import org.springframework.data.annotation.Id;
 
+/**
+ * This abstract class represents a user.
+ */
 public abstract class User {
 
     @Id
@@ -25,6 +22,9 @@ public abstract class User {
     public User() {
     }
 
+    /**
+     * The constructor of the user doesn't contain the token because it is generated when the user requests it.
+     */
     public User(String username, String password, String name, String surname, String email, String phone, Role role) {
         this.username = username;
         this.password = password;

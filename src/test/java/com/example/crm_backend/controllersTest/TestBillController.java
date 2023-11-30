@@ -1,6 +1,6 @@
 package com.example.crm_backend.controllersTest;
 
-/*
+/**
  *
  *@author Pablo Hermida Gómez DAM G1
  *
@@ -24,6 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
+/**
+ * Test class for the bill controller.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TestBillController {
