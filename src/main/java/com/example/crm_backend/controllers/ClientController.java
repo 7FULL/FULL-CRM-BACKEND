@@ -3,6 +3,7 @@ package com.example.crm_backend.controllers;
 import com.example.crm_backend.models.Client;
 import com.example.crm_backend.models.Role;
 import com.example.crm_backend.services.ClientService;
+import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,7 @@ public class ClientController extends Controller{
             clientService.addClient(c);
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error inserting client");
         }
 
@@ -67,6 +69,7 @@ public class ClientController extends Controller{
             c = clientService.getExampleClient();
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error getting client");
         }
 

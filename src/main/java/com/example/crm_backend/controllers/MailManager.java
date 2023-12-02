@@ -4,6 +4,7 @@ import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.transactional.*;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
+import io.sentry.Sentry;
 import org.springframework.stereotype.Component;
 
 import java.beans.JavaBean;
@@ -57,6 +58,7 @@ public class MailManager {
 
             System.out.println(response.toString());
         }catch (Exception e){
+            Sentry.captureException(e);
             System.out.println(e.getMessage());
         }
     }

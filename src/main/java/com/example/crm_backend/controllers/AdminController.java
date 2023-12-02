@@ -1,19 +1,18 @@
 package com.example.crm_backend.controllers;
 
-import com.example.crm_backend.models.Client;
 import com.example.crm_backend.services.AppointmentService;
 import com.example.crm_backend.services.BillService;
 import com.example.crm_backend.services.ClientService;
 import com.example.crm_backend.services.EmployeeService;
+import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Pablo Hermida Gómez
+ * Rest controller for the endpoints of the admin
  */
-
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController extends Controller{
@@ -40,6 +39,7 @@ public class AdminController extends Controller{
         try {
             return ret(200, billService.getBills());
         } catch (Exception e) {
+            Sentry.captureException(e);
             return ret(500, "Error getting bills");
         }
     }
@@ -53,6 +53,7 @@ public class AdminController extends Controller{
         try {
             return ret(200, clientService.getClients());
         } catch (Exception e) {
+            Sentry.captureException(e);
             return ret(500, "Error getting clients");
         }
     }
@@ -66,6 +67,7 @@ public class AdminController extends Controller{
         try {
             return ret(200, employeeService.getAllEmployees());
         } catch (Exception e) {
+            Sentry.captureException(e);
             return ret(500, "Error getting employees");
         }
     }
@@ -79,6 +81,7 @@ public class AdminController extends Controller{
         try {
             return ret(200, appointmentService.getAppointments());
         } catch (Exception e) {
+            Sentry.captureException(e);
             return ret(500, "Error getting appointments");
         }
     }

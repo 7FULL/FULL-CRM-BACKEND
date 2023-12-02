@@ -11,6 +11,7 @@ import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.models.Role;
 import com.example.crm_backend.services.ClientService;
 import com.example.crm_backend.services.EmployeeService;
+import io.sentry.Sentry;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class EmployeeController extends Controller{
             }
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error logging in");
         }
 
@@ -69,6 +71,7 @@ public class EmployeeController extends Controller{
             employeeService.addEmployee(e);
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error inserting employee");
         }
 
@@ -95,6 +98,7 @@ public class EmployeeController extends Controller{
             em = employeeService.getExampleEmployee();
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error getting employee");
         }
 
@@ -113,6 +117,7 @@ public class EmployeeController extends Controller{
             employeeService.addClient(employee, client);
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error adding client");
         }
 
@@ -136,6 +141,7 @@ public class EmployeeController extends Controller{
             employeeService.generateToken(e);
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error sending email");
         }
 
@@ -162,6 +168,7 @@ public class EmployeeController extends Controller{
             employeeService.changePassword(e, password);
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error changing password");
         }
 
@@ -183,6 +190,7 @@ public class EmployeeController extends Controller{
             }
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error checking token");
         }
 
@@ -205,6 +213,7 @@ public class EmployeeController extends Controller{
             }
         }
         catch (Exception ex){
+            Sentry.captureException(ex);
             return ret(500, "Error getting employee");
         }
 

@@ -1,6 +1,7 @@
 package com.example.crm_backend;
 
 import com.example.crm_backend.repository.EmployeeRepository;
+import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,5 +1,7 @@
 package com.example.crm_backend.controllers;
 
+import io.sentry.Sentry;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +28,7 @@ public class Logger {
         try {
             Files.createDirectories(logDirectoryPath);
         } catch (IOException e) {
+            Sentry.captureException(e);
             e.printStackTrace();
         }
 
@@ -37,6 +40,7 @@ public class Logger {
             fileWriter.write(response + "\n");
             fileWriter.write("\n\n<------------------------------------------------------->\n");
         } catch (IOException e) {
+            Sentry.captureException(e);
             e.printStackTrace();
         }
     }
@@ -56,6 +60,7 @@ public class Logger {
         try {
             Files.createDirectories(logDirectoryPath);
         } catch (IOException e) {
+            Sentry.captureException(e);
             e.printStackTrace();
         }
 
@@ -67,6 +72,7 @@ public class Logger {
             fileWriter.write(response + "\n");
             fileWriter.write("\n\n<------------------------------------------------------->\n");
         } catch (IOException e) {
+            Sentry.captureException(e);
             e.printStackTrace();
         }
     }

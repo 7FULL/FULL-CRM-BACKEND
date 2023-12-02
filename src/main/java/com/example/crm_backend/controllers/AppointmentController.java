@@ -8,6 +8,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,7 @@ public class AppointmentController extends Controller{
             appointmentService.addAppointment(appointment, employee, client);
         }
         catch (Exception e){
+            Sentry.captureException(e);
             return ret(500, "Error inserting appointment");
         }
 

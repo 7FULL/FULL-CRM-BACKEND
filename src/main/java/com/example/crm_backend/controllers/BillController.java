@@ -5,6 +5,7 @@ import com.example.crm_backend.models.Client;
 import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.network.BillRequest;
 import com.example.crm_backend.services.BillService;
+import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,7 @@ public class BillController extends Controller{
 
             service.addBill(bill, employee, client);
         } catch (Exception e) {
+            Sentry.captureException(e);
             return ret(500, "Error inserting bill");
         }
 
@@ -54,6 +56,7 @@ public class BillController extends Controller{
      */
     @GetMapping("/pin")
     public String pin() {
+        //Sentry.captureException(new Exception("Pon"));
         return ret(200, "Pon");
     }
 }
