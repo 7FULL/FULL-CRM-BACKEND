@@ -10,12 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- *
- *@author Pablo Hermida Gómez DAM G1
- *
- */
-
-/**
  * Bill controller
  */
 @RestController
