@@ -80,4 +80,8 @@ public class BillService {
     public Bill[] getBills() {
         return billRespository.findAllBills();
     }
+
+    public void deleteBill(String id) {
+        billRespository.deleteById(id);
+    }
 }

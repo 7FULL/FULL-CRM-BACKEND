@@ -42,7 +42,8 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(Date emissionDate, Date expirationDate, BigDecimal price, boolean paid, String clientId, String employeeId, String name) {
+    public Bill(String id, Date emissionDate, Date expirationDate, BigDecimal price, boolean paid, String clientId, String employeeId, String name) {
+        this.id = id;
         this.emissionDate = emissionDate;
         this.expirationDate = expirationDate;
         this.price = price;

@@ -31,6 +31,8 @@ public class BillController extends Controller{
     @PostMapping("/addBill")
     public String addBill(@RequestBody BillRequest request) {
         try {
+            System.out.println(request);
+
             Bill bill = request.getBill();
             Employee employee = request.getEmployee();
             Client client = request.getClient();

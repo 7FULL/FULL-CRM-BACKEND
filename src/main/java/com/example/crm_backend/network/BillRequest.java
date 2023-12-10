@@ -36,4 +36,13 @@ public class BillRequest{
     public Client getClient() {
         return client;
     }
+
+    @Override
+    public String toString() {
+        return "BillRequest{" +
+                "employee=" + employee +
+                ", client=" + client +
+                ", bill=" + bill +
+                '}';
+    }
 }

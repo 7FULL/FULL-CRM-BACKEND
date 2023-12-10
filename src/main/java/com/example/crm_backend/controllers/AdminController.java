@@ -1,14 +1,14 @@
 package com.example.crm_backend.controllers;
 
+import com.example.crm_backend.models.Client;
+import com.example.crm_backend.models.Employee;
 import com.example.crm_backend.services.AppointmentService;
 import com.example.crm_backend.services.BillService;
 import com.example.crm_backend.services.ClientService;
 import com.example.crm_backend.services.EmployeeService;
 import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Rest controller for the endpoints of the admin
@@ -84,5 +84,82 @@ public class AdminController extends Controller{
             Sentry.captureException(e);
             return ret(500, "Error getting appointments");
         }
+    }
+
+    @DeleteMapping("/deleteBill")
+    public String deleteBill(String id) {
+        try {
+            billService.deleteBill(id);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+            return ret(500, "Error deleting bill");
+        }
+
+        return ret(200, "Bill deleted");
+    }
+
+    @DeleteMapping("/deleteClient")
+    public String deleteClient(String id) {
+        try {
+            clientService.deleteClient(id);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+            return ret(500, "Error deleting client");
+        }
+
+        return ret(200, "Client deleted");
+    }
+
+    @DeleteMapping("/deleteEmployee")
+    public String deleteEmployee(String id) {
+        try {
+            employeeService.deleteEmployee(id);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+            return ret(500, "Error deleting employee");
+        }
+
+        return ret(200, "Employee deleted");
+    }
+
+    @DeleteMapping("/deleteAppointment")
+    public String deleteAppointment(String id) {
+        try {
+            appointmentService.deleteAppointment(id);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+            return ret(500, "Error deleting appointment");
+        }
+
+        return ret(200, "Appointment deleted");
+    }
+
+    @GetMapping("/pin")
+    public String pin() {
+        return ret(200, "Pon");
+    }
+
+    @PostMapping("/addClient")
+    public String addClient(@RequestBody Client client) {
+        try {
+            clientService.addClient(client);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+            return ret(500, "Error inserting client");
+        }
+
+        return ret(200, "Client inserted");
+    }
+
+    @PostMapping("/addEmployee")
+    public String addEmployee(@RequestBody Employee employee) {
+        try {
+            employeeService.addEmployee(employee);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+            return ret(500, "Error inserting employee");
+        }
+
+        return ret(200, "Employee inserted");
     }
 }

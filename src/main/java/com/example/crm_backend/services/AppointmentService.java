@@ -79,4 +79,12 @@ public class AppointmentService {
     public Appointment[] getAppointments() {
         return appointmentRepository.findAllAppointments();
     }
+
+    /**
+     * Delete an appointment from the database
+     * @param id    The id of the appointment to delete
+     */
+    public void deleteAppointment(String id) {
+        appointmentRepository.deleteById(id);
+    }
 }
