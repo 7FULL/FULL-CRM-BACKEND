@@ -7,8 +7,6 @@ import com.mailjet.client.transactional.response.SendEmailsResponse;
 import io.sentry.Sentry;
 import org.springframework.stereotype.Component;
 
-import java.beans.JavaBean;
-
 /**
  *
  *@author Pablo Hermida Gómez DAM G1
