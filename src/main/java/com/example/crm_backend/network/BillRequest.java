@@ -25,6 +25,9 @@ public class BillRequest{
         this.bill = bill;
     }
 
+    public BillRequest(){
+    }
+
     public Bill getBill(){
         return bill;
     }

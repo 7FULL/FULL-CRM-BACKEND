@@ -16,6 +16,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 /**
  * Employee controller
@@ -32,14 +34,23 @@ public class EmployeeController extends Controller{
 
     /**
      * This method allows you to login with a username or email and a password
-     * @param username  Username or email to login with
-     * @param password  Password to login with
+     * @param credentials (username) Username or email to login with
+     * @param credentials (password) Password to login with
      * @return          JSON with code 200 and the employee if the login was successful, or code 401 and a message if it wasn't
      */
     @PostMapping("/login")
-    public String login(String username, String password) {
+    public String login(@RequestBody Map<String, String> credentials) {
         Employee em = null;
         try {
+            String username = credentials.get("username");
+            String password = credentials.get("password");
+
+            String token = credentials.get("token");
+
+            if(token != null){
+                //TODO recapcha
+            }
+
             em = employeeService.login(username, password);
 
             if (em == null){
@@ -129,8 +140,10 @@ public class EmployeeController extends Controller{
      * @param email Email of the client
      * @return    JSON with code 200 if the email was sent, or code 500 if there was an error and a message
      */
-    @PostMapping("/forgotPassword")
+    @GetMapping("/forgotPassword")
     public String forgotPassword(String email){
+        System.out.println("Email: " + email);
+
         try {
             Employee e = employeeService.getEmployeeByEmail(email);
 
@@ -142,7 +155,7 @@ public class EmployeeController extends Controller{
         }
         catch (Exception e){
             Sentry.captureException(e);
-            return ret(500, "Error sending email");
+            return ret(500, "Error sending email " + e.getMessage());
         }
 
         return ret(200, "Email sent");
@@ -202,7 +215,7 @@ public class EmployeeController extends Controller{
      * @param username  Username of the employee
      * @return          JSON with code 200 and the employee if it was found, or code 500 and a message if there was an error
      */
-    @PostMapping("/getEmployee")
+    @GetMapping("/getEmployee")
     public String getEmployee(String username){
         Employee e = null;
         try {

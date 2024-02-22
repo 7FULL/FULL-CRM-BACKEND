@@ -161,7 +161,14 @@ public class EmployeeService {
      * @return          The employee if it exists, null otherwise.
      */
     public Employee getEmployeeByUsername(String username) {
-        return employeeRepository.findByUsername(username);
+        //If the username is not found, we search by email
+        Employee e = employeeRepository.findByUsername(username);
+
+        if (e == null) {
+            e = employeeRepository.findByEmail(username);
+        }
+
+        return e;
     }
 
     /**
@@ -181,7 +188,12 @@ public class EmployeeService {
      */
     public Employee addBill(Employee employee, Bill bill) {
         //Employee e = employeeRepository.findById(employeeId).get();
-        employee.addBill(bill);
+        //We check if the bill is already in the list and if it is, we don't add it
+        for (Bill b : employee.getBills()) {
+            if (b.getId().equals(bill.getId())) {
+                return employee;
+            }
+        }
 
         employeeRepository.save(employee);
 
@@ -236,7 +248,7 @@ public class EmployeeService {
      * @return      The html for the email.
      */
     public String tokenHtml(String token){
-        return "<h1>Recuperación de contraseña</h1><p>Para recuperar su contraseña, introduzca el siguiente token en la aplicación: <b>" + token + "</b></p>";
+        return "<h1>Recuperación de contraseña</h1><p>Para recuperar su contraseña, vista este enlace: <b>http://localhost:9000/recoveryPassword/" + token + "</b></p>";
     }
 
     /**

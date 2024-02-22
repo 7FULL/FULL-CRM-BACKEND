@@ -58,8 +58,12 @@ public class ClientService {
      */
     public Client addBill(Client client, Bill bill) {
         //Client c = clientRepository.findById(clientId).get();
-
-        client.addBill(bill);
+        //Comprobasmos si la factura ya existe y si existe no la añadimos
+        for (Bill b : client.getBills()) {
+            if (b.getId().equals(bill.getId())) {
+                return client;
+            }
+        }
 
         clientRepository.save(client);
 

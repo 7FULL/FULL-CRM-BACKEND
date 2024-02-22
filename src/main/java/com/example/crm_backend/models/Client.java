@@ -72,6 +72,10 @@ public class Client extends User{
         return s;
     }
 
+    public Bill[] getBills() {
+        return bills;
+    }
+
     public void addAppointment(Appointment appointment) {
         if (appointments == null){
             appointments = new Appointment[]{appointment};

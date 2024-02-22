@@ -35,6 +35,8 @@ public class Bill {
 
     private boolean paid;
 
+    private boolean sent;
+
     private String clientID;
 
     private String employeeID;
@@ -42,15 +44,20 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(String id, Date emissionDate, Date expirationDate, BigDecimal price, boolean paid, String clientId, String employeeId, String name) {
+    public Bill(String id, Date emissionDate, Date expirationDate, BigDecimal price, boolean paid, boolean sent, String clientId, String employeeId, String name) {
         this.id = id;
         this.emissionDate = emissionDate;
         this.expirationDate = expirationDate;
         this.price = price;
         this.paid = paid;
+        this.sent = sent;
         this.clientID = clientId;
         this.employeeID = employeeId;
         this.name = name;
+    }
+
+    public boolean isSent() {
+        return sent;
     }
 
     public String getId() {
@@ -111,6 +118,10 @@ public class Bill {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 
     @Override
